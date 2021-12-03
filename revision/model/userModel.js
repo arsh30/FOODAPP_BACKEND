@@ -11,6 +11,7 @@ if (process.env.DB_PASSWORD) {
 }
 
 const validator = require("email-validator");
+const bcrypt = require("bcrypt");
 
 let db_link = `mongodb+srv://dbUser:${DB_PASSWORD}@cluster0.eeqwe.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
 
@@ -71,11 +72,23 @@ const userSchema = new mongoose.Schema({
 
 //hooks -> pre cook , save is the event listner , we can delete update as well
 userSchema.pre("save", function (next) {
+  //do hashing
+  // const salt = await bcrypt.genSalt(10);  //salt means kitna hard password hi decrypt krna
+
+  // //hash ->convert the password into other encrypt form
+  // this.password = await bcrypt.hash(this.password, salt);
+
   this.confirmPassword = undefined;
+
   next();
 });
 //METHODS:  use RESET HANDLER CODE
 userSchema.methods.resetHandler = function (password, confirmPassword) {
+  //do hashing
+  // const salt = await bcrypt.genSalt(10);  //salt means kitna hard password hi decrypt krna
+
+  //hash ->convert the password into other encrypt form
+  // this.password = await bcrypt.hash(this.password, salt);
   this.password = password;
   this.confirmPassword = confirmPassword;
   this.token = undefined;

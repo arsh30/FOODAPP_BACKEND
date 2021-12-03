@@ -9,7 +9,37 @@ const cookieParser = require("cookie-parser");
 const reviewRouter = require("./Routers/reviewRouter");
 const BookingRouter = require("./Routers/bookingRouter");
 
+// const rateLimit = require("express-rate-limit");
+// const hpp = require("hpp");
+// const helmet = require("helmet");
+// const xss = require("xss-clean");
+// const mongoSanitize = require("express-mongo-sanitize");
+
 const app = express();
+
+// app.use(
+//   rateLimit({
+//     max: 100, //means 15 min me 100 request aa kti hai
+//     windowMs: 15 * 60 * 1000,  //15 min * 60 sec * 1sec
+//     message:
+//       "Too many accounts created from this IP, please try again after 30 min",
+//   })
+// );
+
+//dont have extra parameter
+// app.use(hpp({
+//   whitelist: ['select',
+//     'page',
+//     'sort',
+//     'myquery']
+// }))
+
+// app.use(helmet());  //to set http headers  helmet sabse upr aata hai xss and mongosanitize se
+
+// app.use(xss());
+
+// To remove data, use:
+// app.use(mongoSanitize());
 
 // let content = JSON.parse(fs.readFileSync("./data.json"));
 //crud functions
@@ -30,8 +60,8 @@ app.listen(process.env.PORT || 8082, function () {
 
 app.use(function (req, res) {
   res.status(404).json({
-    message: "404 page not found"
-  })
+    message: "404 page not found",
+  });
 });
 
 // ==============================

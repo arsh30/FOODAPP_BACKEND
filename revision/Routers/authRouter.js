@@ -3,6 +3,7 @@ const { bodyChecker } = require("./utilFns");
 const jwt = require("jsonwebtoken");
 const userModel = require("../model/userModel");
 // const { JWT_SECRET } = require("../secret");
+// const bcrypt = require("bcrypt");
 
 let JWT_SECRET;
 //deployed
@@ -42,7 +43,10 @@ async function loginUser(req, res) {
     let { email, password } = req.body; //email password aaya body me and then check kra usermodel ie database me ki hai ya nahi using findOne
     let user = await userModel.findOne({ email });
     if (user) {
-      if (user.password == password) {
+      // if (user.password == password) { ab aise nahi krege we have decrypt password
+      // let areEqual = await bcrypt.compare(password, user.password); //1st param is our db pass and 2nd param is our this password
+      // if (areEqual) {
+      if (password == user.password) {
         let token = jwt.sign({ id: user["_id"] }, JWT_SECRET);
         console.log("token:", token);
         res.cookie("JWT", token, { httpOnly: true });
